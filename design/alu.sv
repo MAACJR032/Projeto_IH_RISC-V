@@ -31,6 +31,12 @@ module alu#(
                     ALUResult = $signed(SrcA) >>> SrcB;
             4'b1000:        // Equal
                     ALUResult = (SrcA == SrcB) ? 1 : 0;
+            4'b1001:        // Diferent
+                    ALUResult = (SrcA != SrcB) ? 1 : 0;
+            4'b1010:        // Less Than
+                    ALUResult = (SrcA < SrcB) ? 1 : 0;
+            4'b1011:        // Greater or Equal
+                    ALUResult = (SrcA >= SrcB) ? 1 : 0;
             4'b1100:        // SLTI/SLT
                    ALUResult = ($signed(SrcA) < $signed(SrcB)) ? 1 : 0;
             default:
