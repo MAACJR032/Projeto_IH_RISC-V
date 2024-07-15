@@ -5,6 +5,7 @@ module ALUController (
     input logic [1:0] ALUOp,  // 2-bit opcode field from the Controller--00: LW/SW/AUIPC; 01:Branch; 10: RType/IType; 11:JAL/LUI
     input logic [6:0] Funct7,  // bits 25 to 31 of the instruction
     input logic [2:0] Funct3,  // bits 12 to 14 of the instruction
+    input logic ALUSrc,
 
     //Output
     output logic [3:0] Operation  // operation selection for ALU
@@ -15,7 +16,7 @@ module ALUController (
       ((ALUOp == 2'b01) && (Funct3 == 3'b101)) || //BGE
       ((ALUOp == 2'b10) && (Funct3 == 3'b101) && (Funct7 == 7'b0000000)) ||  // R\I-SRLI
       ((ALUOp == 2'b10) && (Funct3 == 3'b101) && (Funct7 == 7'b0100000)) || // R\I-SRAI
-      ((ALUOp == 2'b10) && (Funct3 == 3'b000) && (Funct7 == 7'b0100000)); // SUB
+      ((ALUOp == 2'b10) && (Funct3 == 3'b000) && (Funct7 == 7'b0100000)) && (ALUSrc == 1'b0); // SUB
 
 
   assign Operation[1] = (ALUOp == 2'b00) ||  // LW\SW
@@ -24,9 +25,9 @@ module ALUController (
       ((ALUOp == 2'b10) && (Funct3 == 3'b000)) ||  // R\I-add
       ((ALUOp == 2'b10) && (Funct3 == 3'b100)) ||  // R\I-xor
       ((ALUOp == 2'b10) && (Funct3 == 3'b101) && (Funct7 == 7'b0100000)) ||  // R\I-SRAI
-      ((ALUOp == 2'b10) && (Funct3 == 3'b000) && (Funct7 == 7'b0100000)); // SUB
+      ((ALUOp == 2'b10) && (Funct3 == 3'b000) && (Funct7 == 7'b0100000)) && (ALUSrc == 1'b0); // SUB
 
-  assign Operation[2] =  ((ALUOp==2'b10) && (Funct3==3'b101) && (Funct7==7'b0000000)) || // R\I-SRLI
+  assign Operation[2] =  ((ALUOp == 2'b10) && (Funct3 == 3'b101) && (Funct7==7'b0000000)) || // R\I-SRLI
       ((ALUOp == 2'b10) && (Funct3 == 3'b101) && (Funct7 == 7'b0100000)) ||  // R\I-SRAI
       ((ALUOp == 2'b10) && (Funct3 == 3'b001)) ||  // R\I-SLLI
       ((ALUOp == 2'b10) && (Funct3 == 3'b010)) ||  // R\I-SLTI
@@ -34,5 +35,5 @@ module ALUController (
       
   assign Operation[3] = (ALUOp == 2'b01) ||  // BEQ
       ((ALUOp == 2'b10) && (Funct3 == 3'b010)) || // R\I-SLTI
-      ((ALUOp == 2'b10) && (Funct3 == 3'b000) && (Funct7 == 7'b0100000)); // SUB
+      ((ALUOp == 2'b10) && (Funct3 == 3'b000) && (Funct7 == 7'b0100000)) && (ALUSrc == 1'b0); // SUB
 endmodule
