@@ -32,13 +32,13 @@ module imm_Gen (
 
       7'b1101111: /*J-TYPE*/
       Imm_out = {
-         inst_code[31] ? 11'h7FF : 11'b0,
-         inst_code[31],
-         inst_code[19:12],
-         inst_code[20],
-         inst_code[30:21],
-         1'b0
-      };
+          inst_code[31] ? 11'h7FF : 11'b0,  // Sign-extension of the immediate
+          inst_code[31],                    // imm[20]
+          inst_code[19:12],                 // imm[19:12]
+          inst_code[20],                    // imm[11]
+          inst_code[30:21],                 // imm[10:1]
+          1'b0                              // imm[0] (LSB)
+    };
 
       default: Imm_out = {32'b0};
 
