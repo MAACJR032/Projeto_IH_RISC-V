@@ -13,7 +13,7 @@ module imm_Gen (
 
       7'b0010011: begin /*I-type arithmetic part*/
           if (inst_code[14:12] == 3'b101)
-              Imm_out = { 20'b0, inst_code[24:20]};
+              Imm_out = { 27'b0, inst_code[24:20]};
           else
               Imm_out = {inst_code[31] ? 20'hFFFFF : 20'b0, inst_code[31:20]};
       end
@@ -39,6 +39,9 @@ module imm_Gen (
           inst_code[30:21],                 // imm[10:1]
           1'b0                              // imm[0] (LSB)
     };
+
+      7'b1100111: /*JR-TYPE*/
+      Imm_out = {inst_code[31] ? 20'hFFFFF : 20'b0, inst_code[31:20]};
 
       default: Imm_out = {32'b0};
 

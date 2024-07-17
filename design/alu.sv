@@ -7,7 +7,7 @@ module alu#(
         (
         input logic [DATA_WIDTH-1:0]    SrcA,
         input logic [DATA_WIDTH-1:0]    SrcB,
-
+        input logic [8:0]               PC_Cur,
         input logic [OPCODE_LENGTH-1:0]    Operation,
         output logic[DATA_WIDTH-1:0] ALUResult
         );
@@ -22,7 +22,7 @@ module alu#(
             4'b0010:       // ADD/ADDI
                     ALUResult = $signed(SrcA) + $signed(SrcB);
             4'b0011:        // JAL
-                    ALUResult = 1;
+                    ALUResult = PC_Cur + 4;
             4'b0100:        // SLLI
                     ALUResult = SrcA << SrcB;
             4'b0101:        // SRLI

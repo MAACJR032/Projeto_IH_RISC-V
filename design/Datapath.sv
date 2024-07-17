@@ -214,6 +214,7 @@ module Datapath #(
   alu alu_module (
       FAmux_Result,
       SrcB,
+      B.Curr_Pc,
       ALU_CC,
       ALUResult
   );
@@ -221,6 +222,8 @@ module Datapath #(
       B.Curr_Pc,
       B.ImmG,
       B.Branch,
+      B.ALUOp,
+      B.RD_One,
       ALUResult,
       BrImm,
       Old_PC_Four,

@@ -9,6 +9,7 @@ add wave -position end sim:/tb_top/riscV/clk
 add wave -position end sim:/tb_top/riscV/reset
 add wave -position end sim:/tb_top/riscV/dp/instr_mem/rd
 add wave -position end sim:/tb_top/riscV/dp/B.RS_One
+add wave -position end sim:/tb_top/riscV/dp/B.RD_One
 add wave -position end sim:/tb_top/riscV/dp/B.RS_Two
 add wave -position end sim:/tb_top/riscV/dp/B.rd
 add wave -position end sim:/tb_top/riscV/dp/PC
@@ -27,6 +28,10 @@ add wave -position end sim:/tb_top/riscV/ALUop_Reg
 add wave -position end sim:/tb_top/riscV/Funct7
 add wave -position end sim:/tb_top/riscV/Funct3
 add wave -position end sim:/tb_top/riscV/Operation
+add wave -position end sim:/tb_top/riscV/dp/brunit/Jmp_Sel
+add wave -position end sim:/tb_top/riscV/dp/brunit/PC_Imm
+add wave -position end sim:/tb_top/riscV/dp/brunit/Imm
+add wave -position end sim:/tb_top/riscV/dp/brunit/Reg1
 add wave -position end sim:/tb_top/riscV/dp/data_mem/*
 
 radix signal sim:/tb_top/riscV/dp/instr_mem/rd hexadecimal
@@ -36,6 +41,7 @@ radix signal sim:/tb_top/riscV/dp/B.RS_One unsigned
 radix signal sim:/tb_top/riscV/dp/B.RS_Two unsigned
 radix signal sim:/tb_top/riscV/dp/B.rd unsigned
 radix signal sim:/tb_top/riscV/WB_Data hexadecimal
+radix signal sim:/tb_top/riscV/dp/brunit/PC_Imm
 radix signal sim:/tb_top/riscV/dp/rf/register_file[31] hexadecimal
 radix signal sim:/tb_top/riscV/dp/rf/register_file[30] hexadecimal
 radix signal sim:/tb_top/riscV/dp/rf/register_file[29] hexadecimal
