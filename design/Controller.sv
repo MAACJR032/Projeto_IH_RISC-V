@@ -15,7 +15,7 @@ module Controller (
     output logic RegWrite, //The register on the Write register input is written with the value on the Write data input 
     output logic MemRead,  //Data memory contents designated by the address input are put on the Read data output
     output logic MemWrite, //Data memory contents designated by the address input are replaced by the value on the Write data input.
-    output logic [1:0] ALUOp,  //00: LW/SW; 01:Branch; 10: RType/IType 11: JAL/LUI
+    output logic [1:0] ALUOp,  //00: LW/SW; 01:Branch; 10: R-Type/I-Type 11: JAL/LUI
     output logic Branch  //0: branch is not taken; 1: branch is taken
 );
 
