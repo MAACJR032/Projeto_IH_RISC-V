@@ -63,6 +63,17 @@ module datamemory #(
       endcase
     end else if (MemWrite) begin
       case (Funct3)
+          
+        3'b000: begin //SB
+          Wr <= 4'b0100; // n sei, mas pegou
+            Datain <= {4{wd[7:0]}}; //msm ideia do de baixo
+        end
+
+        3'b001: begin //SH
+          Wr <= 4'b1100; //ativa a escrita apenas para metade dos blocos de memoria lá em memoria32data
+            Datain <= {2{wd[15:0]}}; // embora ele divida lá em memoria32data eu repeti duas vezes pra passar só pra evitar qualquer coisa sla
+        end
+          
         3'b010: begin  //SW
           Wr <= 4'b1111;
           Datain <= wd;
@@ -76,3 +87,4 @@ module datamemory #(
   end
 
 endmodule
+    
