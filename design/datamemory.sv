@@ -36,9 +36,30 @@ module datamemory #(
 
     if (MemRead) begin
       case (Funct3)
-        3'b010:  //LW
-        rd <= Dataout;
-        default: rd <= Dataout;
+        3'b000: begin // LB
+          raddress <= {22'b0, a[8:0]}; // byte
+          rd <= {{24{Dataout[7]}}, Dataout[7:0]}; // 24 do sinal + 1byte da data
+        end
+
+        3'b001: begin // LH
+          raddress <= {22'b0, a[8:1], 1'b0}; // meia word
+          rd <= {{16{Dataout[15]}}, Dataout[15:0]}; //16 do sinal + 2byte da data
+        end
+
+        3'b010: begin // LW
+          raddress <= {22'b0, a[8:2], 2'b00}; // word
+          rd <= Dataout; 
+        end
+
+        3'b100: begin // LBU
+          raddress <= {22'b0, a[8:0]}; 
+          rd <= {24'b0, Dataout[7:0]};
+        end
+
+        default: begin
+          raddress = {22'b0, a[8:2], 2'b00};
+          rd = Dataout;
+        end
       endcase
     end else if (MemWrite) begin
       case (Funct3)
