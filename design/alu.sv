@@ -19,7 +19,7 @@ module alu#(
                     ALUResult = SrcA & SrcB;
             4'b0001:        // OR
                     ALUResult = SrcA | SrcB;
-            4'b0010:       // ADD/ADDI
+            4'b0010:       // ADD/ADDI / LW/RW(carregar o endereço)
                     ALUResult = $signed(SrcA) + $signed(SrcB);
             4'b0011:        // JAL
                     ALUResult = PC_Cur + 4;
