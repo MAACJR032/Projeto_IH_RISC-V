@@ -38,52 +38,43 @@ module datamemory #(
       case (Funct3)
         3'b000: begin // LB
           raddress <= {22'b0, a[8:0]}; // byte
-          rd <= {{24{Dataout[7]}}, Dataout[7:0]}; // 24 do sinal + 1byte da data
+          rd <= {{24{Dataout[7]}}, Dataout[7:0]}; // 24 do sinal + 1 byte do dado
         end
 
         3'b001: begin // LH
-          raddress <= {22'b0, a[8:1], 1'b0}; // meia word
-          rd <= {{16{Dataout[15]}}, Dataout[15:0]}; //16 do sinal + 2byte da data
+          raddress <= {22'b0, a[8:1], 1'b0}; // half word
+          rd <= {{16{Dataout[15]}}, Dataout[15:0]}; // 16 do sinal + 2 bytes do dado
         end
 
         3'b010: begin // LW
-          raddress <= {22'b0, a[8:2], 2'b00}; // word
           rd <= Dataout; 
         end
 
-        3'b100: begin // LBU
-          raddress <= {22'b0, a[8:0]}; 
+        3'b100: begin // LBU 
           rd <= {24'b0, Dataout[7:0]};
         end
 
         default: begin
-          raddress = {22'b0, a[8:2], 2'b00};
           rd = Dataout;
         end
       endcase
     end else if (MemWrite) begin
       case (Funct3)
-          
-        3'b000: begin //SB
-            // O wr tem que ser 0001 pra ativar só o ultimo bloco lá no 32memorydata
-            //Assim ta funcionando pq o deslocamento 2 em bytes faz fica na casa 3
-            // O problema ta pra calcular o endereço 
-          Wr <= 4'b0100; // n sei, mas pegou
-            //Isso aq tá errado, n pode escrever em td memoria
-            //colocar pra escrever Datain[7:0] = wd
-            //la em 32memdqta já separa o datain ent so muda a parte
-          Datain <= {4{wd[7:0]}}; //msm ideia do de baixo
+        3'b000: begin //SB 
+          Wr <= 4'b0100;
+          Datain[7:0] <= wd;
         end
 
         3'b001: begin //SH
-          Wr <= 4'b1100; //ativa a escrita apenas para metade dos blocos de memoria lá em memoria32data
-            Datain <= {2{wd[15:0]}}; // embora ele divida lá em memoria32data eu repeti duas vezes pra passar só pra evitar qualquer coisa sla
+            Wr <= 4'b1100;
+            Datain[15:0] <= wd;
         end
           
         3'b010: begin  //SW
           Wr <= 4'b1111;
           Datain <= wd;
         end
+
         default: begin
           Wr <= 4'b1111;
           Datain <= wd;
@@ -93,4 +84,3 @@ module datamemory #(
   end
 
 endmodule
-    
