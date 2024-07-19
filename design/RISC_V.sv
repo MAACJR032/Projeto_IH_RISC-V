@@ -19,14 +19,23 @@ module riscv #(
 );
 
   logic [6:0] opcode;
-  logic ALUSrc, MemtoReg, RegWrite, MemRead, MemWrite, Branch;
+  logic ALUSrc, MemtoReg, RegWrite, MemRead, MemWrite, Branch, halt, halt_reg;
   logic [1:0] ALUop;
   logic [1:0] ALUop_Reg;
   logic [6:0] Funct7;
   logic [2:0] Funct3;
   logic [3:0] Operation;
+  
+  // Halt register
+  always_ff @(posedge clk or posedge reset) begin
+    if (reset)
+      halt_reg <= 1'b0;
+    else if (halt)
+      halt_reg <= 1'b1;
+  end
 
   Controller c (
+      halt_reg,
       opcode,
       ALUSrc,
       MemtoReg,
@@ -34,7 +43,8 @@ module riscv #(
       MemRead,
       MemWrite,
       ALUop,
-      Branch
+      Branch,
+      halt
   );
 
   ALUController ac (
@@ -54,6 +64,7 @@ module riscv #(
       MemWrite,
       MemRead,
       Branch,
+      halt,
       ALUop,
       Operation,
       opcode,

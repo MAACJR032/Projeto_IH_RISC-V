@@ -2,6 +2,7 @@
 
 module Controller (
     //Input
+    input halt_reg,
     input logic [6:0] Opcode,
     //7-bit opcode field from the instruction
 
@@ -16,10 +17,11 @@ module Controller (
     output logic MemRead,  //Data memory contents designated by the address input are put on the Read data output
     output logic MemWrite, //Data memory contents designated by the address input are replaced by the value on the Write data input.
     output logic [1:0] ALUOp,  //00: LW/SW; 01:Branch; 10: R-Type/I-Type 11: JAL/LUI
-    output logic Branch  //0: branch is not taken; 1: branch is taken
+    output logic Branch,  //0: branch is not taken; 1: branch is taken
+    output logic halt
 );
 
-  logic [6:0] R_TYPE, I_TYPE, LW, SW, BR, J, JR;
+  logic [6:0] R_TYPE, I_TYPE, LW, SW, BR, J, JR, HALT;
 
   assign R_TYPE = 7'b0110011; // add,and,sub,or,xor,slt
   assign I_TYPE = 7'b0010011; // addi,slti,slli,srli,srai
@@ -28,6 +30,7 @@ module Controller (
   assign BR = 7'b1100011; // beq,bne,blt,bge
   assign J = 7'b1101111; // jal
   assign JR = 7'b1100111; //jalr
+  assign HALT = 7'b0000001; // halt
 
   assign ALUSrc = (Opcode == LW || Opcode == SW || Opcode == I_TYPE);
   assign MemtoReg = (Opcode == LW);
@@ -37,5 +40,6 @@ module Controller (
   assign ALUOp[0] = (Opcode == BR || Opcode == J || Opcode == JR);
   assign ALUOp[1] = (Opcode == R_TYPE || Opcode == I_TYPE || Opcode == J || Opcode == JR);
   assign Branch = (Opcode == BR || Opcode == J || Opcode == JR);
+  assign halt = (Opcode == HALT) || (halt_reg);
 
 endmodule

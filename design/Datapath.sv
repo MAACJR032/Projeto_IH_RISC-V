@@ -18,6 +18,7 @@ module Datapath #(
     MemWrite,  // Register file or Immediate MUX // Memroy Writing Enable
     MemRead,  // Memroy Reading Enable
     Branch,  // Branch Enable
+    halt,
     input  logic [          1:0] ALUOp,
     input  logic [ALU_CC_W -1:0] ALU_CC,         // ALU Control Code ( input of the ALU )
     output logic [          6:0] opcode,
@@ -38,7 +39,7 @@ module Datapath #(
     output logic [DATA_W-1:0] rd_data  // read data
 );
 
-  logic [PC_W-1:0] PC, PCPlus4, Next_PC;
+  logic [PC_W-1:0] PC, PCPlus4, PCPlus4_temp, Next_PC;
   logic [INS_W-1:0] Instr;
   logic [DATA_W-1:0] Reg1, Reg2;
   logic [DATA_W-1:0] ReadData;
@@ -50,8 +51,8 @@ module Datapath #(
   logic [1:0] FBmuxSel;
   logic [DATA_W-1:0] FAmux_Result;
   logic [DATA_W-1:0] FBmux_Result;
-  logic Reg_Stall;  //1: PC fetch same, Register not update
-
+  logic Reg_Stall;  //1: PC fetch same, Register not updat
+  
   if_id_reg A;
   id_ex_reg B;
   ex_mem_reg C;
@@ -61,8 +62,10 @@ module Datapath #(
   adder #(9) pcadd (
       PC,
       9'b100,
-      PCPlus4
+      PCPlus4_temp
   );
+  assign PCPlus4 = (halt) ? PC : PCPlus4_temp; // Antes de incrementar o PC checa o halt
+
   mux2 #(9) pcmux (
       PCPlus4,
       BrPC[PC_W-1:0],
@@ -89,7 +92,7 @@ module Datapath #(
       A.Curr_Pc <= 0;
       A.Curr_Instr <= 0;
     end
-        else if (!Reg_Stall)    // stall
+        else if (!Reg_Stall && !halt)    // stall
         begin
       A.Curr_Pc <= PC;
       A.Curr_Instr <= Instr;
@@ -141,6 +144,7 @@ module Datapath #(
       B.MemWrite <= 0;
       B.ALUOp <= 0;
       B.Branch <= 0;
+      B.halt <= 0;
       B.Curr_Pc <= 0;
       B.RD_One <= 0;
       B.RD_Two <= 0;
@@ -159,6 +163,7 @@ module Datapath #(
       B.MemWrite <= MemWrite;
       B.ALUOp <= ALUOp;
       B.Branch <= Branch;
+      B.halt <= halt;
       B.Curr_Pc <= A.Curr_Pc;
       B.RD_One <= Reg1;
       B.RD_Two <= Reg2;
@@ -222,6 +227,7 @@ module Datapath #(
       B.Curr_Pc,
       B.ImmG,
       B.Branch,
+      B.halt,
       B.ALUOp,
       B.RD_One,
       ALUResult,

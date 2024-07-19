@@ -362,7 +362,11 @@ def check_immediate(immediate, length):
 def translate_instruction(instruction):
 	try:
 		instr = instruction.split(" ")[0]
-
+		
+		halt_instructio = instruction.rstrip("\n")
+		if halt_instructio == "halt":
+			return "00000000000000000000000000000001"
+		
 		check_instruction(instr)
 
 		opcode = INSTRUCTION[instr]["opcode"]
