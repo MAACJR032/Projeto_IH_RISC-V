@@ -227,7 +227,6 @@ module Datapath #(
       B.Curr_Pc,
       B.ImmG,
       B.Branch,
-      B.halt,
       B.ALUOp,
       B.RD_One,
       ALUResult,
