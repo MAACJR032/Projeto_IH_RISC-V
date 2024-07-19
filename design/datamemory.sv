@@ -65,8 +65,14 @@ module datamemory #(
       case (Funct3)
           
         3'b000: begin //SB
+            // O wr tem que ser 0001 pra ativar só o ultimo bloco lá no 32memorydata
+            //Assim ta funcionando pq o deslocamento 2 em bytes faz fica na casa 3
+            // O problema ta pra calcular o endereço 
           Wr <= 4'b0100; // n sei, mas pegou
-            Datain <= {4{wd[7:0]}}; //msm ideia do de baixo
+            //Isso aq tá errado, n pode escrever em td memoria
+            //colocar pra escrever Datain[7:0] = wd
+            //la em 32memdqta já separa o datain ent so muda a parte
+          Datain <= {4{wd[7:0]}}; //msm ideia do de baixo
         end
 
         3'b001: begin //SH
