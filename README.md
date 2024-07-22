@@ -6,7 +6,7 @@ Este repositório contém os arquivos base para o projeto da disciplina Infraest
 
 ## 📝 Instruções
 
-A tabela abaixo mostra o status das instruções implementadas até o momento:
+As instruções a serem implementadas são as do conjunto RV32I, que é parte oficial do conjunto de instruções RISC-V. A tabela abaixo mostra o status de implementação das instruções no projeto atual:
 
 | # | Instrução | Implementada | Testada | Funcionando |
 |---|-----------|:-----------:|:-------:|:-----------:|
@@ -20,66 +20,35 @@ Seu objetivo é implementar as instruções restantes listadas abaixo:
 
 | # | Instrução | Implementada | Testada | Funcionando |
 |---|-----------|:-----------:|:-------:|:-----------:|
-| 1  | `JAL`     |      ❌     |    ❌    |      ❌      |
-| 2  | `JALR`    |      ❌     |    ❌    |      ❌      |
-| 3  | `BNE`     |      ❌     |    ❌    |      ❌      |
-| 4  | `BLT`     |      ❌     |    ❌    |      ❌      |
-| 5  | `BGE`     |      ❌     |    ❌    |      ❌      |
-| 6  | `LB`      |      ❌     |    ❌    |      ❌      |
-| 7  | `LH`      |      ❌     |    ❌    |      ❌      |
-| 8  | `LBU`     |      ❌     |    ❌    |      ❌      |
-| 9  | `SB`      |      ❌     |    ❌    |      ❌      |
-| 10 | `SH`      |      ❌     |    ❌    |      ❌      |
-| 11 | `SLTI`    |      ❌     |    ❌    |      ❌      |
-| 12 | `ADDI`    |      ❌     |    ❌    |      ❌      |
-| 13 | `SLLI`    |      ❌     |    ❌    |      ❌      |
-| 14 | `SRLI`    |      ❌     |    ❌    |      ❌      |
-| 15 | `SRAI`    |      ❌     |    ❌    |      ❌      |
-| 16 | `SUB`     |      ❌     |    ❌    |      ❌      |
-| 17 | `SLT`     |      ❌     |    ❌    |      ❌      |
-| 18 | `XOR`     |      ❌     |    ❌    |      ❌      |
-| 19 | `OR`      |      ❌     |    ❌    |      ❌      |
-| 20 | `HALT`    |      ❌     |    ❌    |      ❌      |
+| 1  | `JAL`     |      ✅     |    ✅    |      ✅      |
+| 2  | `JALR`    |      ✅     |    ✅    |      ✅      |
+| 3  | `BNE`     |      ✅     |    ✅    |      ✅      |
+| 4  | `BLT`     |      ✅     |    ✅    |      ✅      |
+| 5  | `BGE`     |      ✅     |    ✅    |      ✅      |
+| 6  | `LB`      |      ✅     |    ✅    |      ✅      |
+| 7  | `LH`      |      ✅     |    ✅    |      ✅      |
+| 8  | `LBU`     |      ✅     |    ✅    |      ✅      |
+| 9  | `SB`      |      ✅     |    ✅    |      ✅      |
+| 10 | `SH`      |      ✅     |    ✅    |      ✅      |
+| 11 | `SLTI`    |      ✅     |    ✅    |      ✅      |
+| 12 | `ADDI`    |      ✅     |    ✅    |      ✅      |
+| 13 | `SLLI`    |      ✅     |    ✅    |      ✅      |
+| 14 | `SRLI`    |      ✅     |    ✅    |      ✅      |
+| 15 | `SRAI`    |      ✅     |    ✅    |      ✅      |
+| 16 | `SUB`     |      ✅     |    ✅    |      ✅      |
+| 17 | `SLT`     |      ✅     |    ✅    |      ✅      |
+| 18 | `XOR`     |      ✅     |    ✅    |      ✅      |
+| 19 | `OR`      |      ✅     |    ✅    |      ✅      |
+| 20 | `LUI`     |      ❌     |    ❌    |      ❌      |
+| 21 | `HALT`    |      ✅     |    ✅    |      ✅      |
 
-### Observações
-
-- As instruções de 1 a 19 são parte oficial do conjunto RV32I. A pseudo-instrução `HALT` é uma instrução usada em linguagens de montagem para **indicar o fim de um programa ou pausar sua execução**. Quando o processador encontra a instrução `HALT`, geralmente é acionada uma ação específica, como inserir zeros (ou outro valor pré-determinado) no pipeline do processador e interromper o contador de programa (PC), impedindo a execução de novas instruções. Essa funcionalidade permite que o programador tenha controle sobre o fluxo do programa, indicando explicitamente quando o programa deve terminar.
-
-- Você tem permissão para modificar a implementação do processador como desejar (por exemplo, incluir fios, alterar tamanhos, modificar sinais, remover ou adicionar módulos, etc.), desde que o resultado final continue funcionando como um pipeline e produza os resultados corretos. Suas decisões de projeto devem ser adequadamente documentadas.
-
-## 📦 Entrega
-
-A data de entrega do projeto será especificada no Classroom, assim como a quantidade de pessoas por grupo.
-
-### Modelo de entrega
-
-A entrega consiste no link do fork do repositório no GitHub, contendo o código-fonte do projeto e o relatório.
-
-- Faça um fork desse repositório e inclua as alterações necessárias (**todos os integrantes do grupo devem contribuir!**).
-  - Além das implementações, fique à vontade para alterar o README.md como achar melhor.
-
-- O relatório deve estar no formato PDF ou como link de um Google Docs. Ele deve conter:
-  - Nome dos integrantes do grupo.
-  - Link para o fork do repositório no GitHub.
-  - Descrição das escolhas de projeto.
-  - Descrição dos testes realizados.
-  - Resultados obtidos.
-  - Dificuldades encontradas.
-  - Conclusão.
-
-O relatório não deve ser extenso, mas deve conter todas as informações necessárias para a avaliação do projeto.
-
-## 📝 Avaliação
-
-A avaliação do projeto será baseada na implementação correta das instruções, nos testes realizados e no funcionamento adequado do processador.
-
-- O projeto será submetido a casos de teste para verificar seu funcionamento, mas o processo de avaliação também levará em conta a qualidade do código e do relatório.
+Você tem permissão para modificar a implementação do processador como desejar (por exemplo, incluir fios, alterar tamanhos, modificar sinais, remover ou adicionar módulos, etc.), desde que o resultado final continue funcionando como um pipeline e produza os resultados corretos.
 
 ## 📁 Estrutura do repositório
 O repositório está organizado da seguinte forma:
 - [`design`](/design): Contém o código-fonte do projeto do processador RISC-V.
-- [`doc`](/doc): Contém mais explicações sobre a implementação.
-- [`sim`](/sim): Contém os arquivos de simulação e os resultados, para uso nos testes.
+- [`doc`](/doc): Contém mais explicações sobre a implementação do pipeline.
+- [`sim`](/sim): Contém exemplos de arquivos de simulação e seus resultados esperados.
 - [`verif`](/verif): Contém os arquivos de testbench e as instruções de como testar o projeto.
 
 ## 📚 Recursos
@@ -95,11 +64,17 @@ O repositório está organizado da seguinte forma:
   - Utilize o simulador CompSim
   - Utilize o [RISC-V Interpreter, by Cornell University](https://www.cs.cornell.edu/courses/cs3410/2019sp/riscv/interpreter/)
 
-## ❓ Dúvidas
+## 📦 Entrega
 
-Em caso de dúvidas ou dificuldades, entre em contato com os monitores da disciplina:
-- [joaopmarinho](https://github.com/joaopmarinho)
-- [nathaliafab](https://github.com/nathaliafab)
+A data de entrega do projeto será especificada no Classroom, assim como a quantidade de pessoas por grupo.
+
+### Modelo de entrega
+
+A entrega consiste em um relatório seguindo o modelo. Não deve ser extenso, mas precisa conter todas as informações descritas para a avaliação do projeto.
+
+### Avaliação
+
+A avaliação do projeto será baseada na implementação correta das instruções, nos testes realizados e no funcionamento adequado do processador.
 
 ## 🐛 Encontrou um bug ou pensou numa melhoria?
 

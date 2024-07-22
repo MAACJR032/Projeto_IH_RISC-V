@@ -215,6 +215,10 @@ def translate_instruction(instruction):
 
 	rd = instruction.split(" ")[1].split(",")[0]
 	rd = bin(int(rd[1:]))[2:].zfill(5)
+	
+	halt_instruction = instruction.rstrip("\n")
+		if halt_instruction == "halt":
+			return "00000000000000000000000000000001"
 
 	if (instr == "lui" or instr == "auipc"):
 		imm = instruction.split(" ")[1].split(",")[1]
