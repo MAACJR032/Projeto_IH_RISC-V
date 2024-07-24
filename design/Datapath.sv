@@ -220,6 +220,7 @@ module Datapath #(
       FAmux_Result,
       SrcB,
       B.Curr_Pc,
+      B.Branch,
       ALU_CC,
       ALUResult
   );
@@ -227,6 +228,7 @@ module Datapath #(
       B.Curr_Pc,
       B.ImmG,
       B.Branch,
+      B.Curr_Instr[6:0],
       B.ALUOp,
       B.RD_One,
       ALUResult,

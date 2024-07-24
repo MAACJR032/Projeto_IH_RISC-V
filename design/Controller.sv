@@ -39,7 +39,7 @@ module Controller (
   assign MemWrite = (Opcode == SW);
   assign ALUOp[0] = (Opcode == BR || Opcode == J || Opcode == JR);
   assign ALUOp[1] = (Opcode == R_TYPE || Opcode == I_TYPE || Opcode == J || Opcode == JR);
-  assign Branch = (Opcode == BR || Opcode == JR);
+  assign Branch = (Opcode == BR || Opcode == J || Opcode == JR);
   assign halt = (Opcode == HALT) || (halt_reg);
 
 endmodule

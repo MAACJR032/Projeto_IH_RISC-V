@@ -8,6 +8,7 @@ module alu#(
         input logic [DATA_WIDTH-1:0]    SrcA,
         input logic [DATA_WIDTH-1:0]    SrcB,
         input logic [8:0]               PC_Cur,
+        input logic                     Branch,
         input logic [OPCODE_LENGTH-1:0]    Operation,
         output logic[DATA_WIDTH-1:0] ALUResult
         );
@@ -19,10 +20,12 @@ module alu#(
                     ALUResult = SrcA & SrcB;
             4'b0001:        // OR
                     ALUResult = SrcA | SrcB;
-            4'b0010:       // ADD/ADDI / LW/RW(carregar o endereço)
+            4'b0010:       // ADD/ADDI / LW/SW (carregar o endereço)
                     ALUResult = $signed(SrcA) + $signed(SrcB);
-            4'b0011:        // JAL
-                    ALUResult = PC_Cur + 4;
+            4'b0011: begin // JAL
+                    if (Branch)
+                        ALUResult = PC_Cur + 4;
+            end
             4'b0100:        // SLLI
                     ALUResult = SrcA << SrcB;
             4'b0101:        // SRLI
@@ -48,4 +51,3 @@ module alu#(
             endcase
         end
 endmodule
-
