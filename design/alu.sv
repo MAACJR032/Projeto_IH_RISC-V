@@ -22,9 +22,11 @@ module alu#(
                     ALUResult = SrcA | SrcB;
             4'b0010:       // ADD/ADDI / LW/SW (carregar o endereço)
                     ALUResult = $signed(SrcA) + $signed(SrcB);
-            4'b0011: begin // JAL
+            4'b0011: begin // JAL / LUI
                     if (Branch)
                         ALUResult = PC_Cur + 4;
+                    else
+                        ALUResult = SrcB;
             end
             4'b0100:        // SLLI
                     ALUResult = SrcA << SrcB;

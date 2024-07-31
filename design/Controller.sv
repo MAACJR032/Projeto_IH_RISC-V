@@ -21,7 +21,7 @@ module Controller (
     output logic halt
 );
 
-  logic [6:0] R_TYPE, I_TYPE, LW, SW, BR, J, JR, HALT;
+  logic [6:0] R_TYPE, I_TYPE, LW, SW, BR, J, JR, HALT, LUI;
 
   assign R_TYPE = 7'b0110011; // add,and,sub,or,xor,slt
   assign I_TYPE = 7'b0010011; // addi,slti,slli,srli,srai
@@ -31,14 +31,15 @@ module Controller (
   assign J = 7'b1101111; // jal
   assign JR = 7'b1100111; //jalr
   assign HALT = 7'b0000001; // halt
+  assign LUI = 7'b0110111; // lui
 
-  assign ALUSrc = (Opcode == LW || Opcode == SW || Opcode == I_TYPE);
+  assign ALUSrc = (Opcode == LW || Opcode == SW || Opcode == I_TYPE || Opcode == LUI);
   assign MemtoReg = (Opcode == LW);
-  assign RegWrite = (Opcode == R_TYPE || Opcode == I_TYPE || Opcode == LW || Opcode == J || Opcode == JR);
+  assign RegWrite = (Opcode == R_TYPE || Opcode == I_TYPE || Opcode == LW || Opcode == J || Opcode == JR || Opcode == LUI);
   assign MemRead = (Opcode == LW);
   assign MemWrite = (Opcode == SW);
-  assign ALUOp[0] = (Opcode == BR || Opcode == J || Opcode == JR);
-  assign ALUOp[1] = (Opcode == R_TYPE || Opcode == I_TYPE || Opcode == J || Opcode == JR);
+  assign ALUOp[0] = (Opcode == BR || Opcode == J || Opcode == JR || Opcode == LUI);
+  assign ALUOp[1] = (Opcode == R_TYPE || Opcode == I_TYPE || Opcode == J || Opcode == JR || Opcode == LUI);
   assign Branch = (Opcode == BR || Opcode == J || Opcode == JR);
   assign halt = (Opcode == HALT) || (halt_reg);
 
