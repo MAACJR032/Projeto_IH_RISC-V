@@ -67,6 +67,7 @@ opcode = {
  "sra": "0110011",
  "or": "0110011",
  "and": "0110011",
+ "halt": "000001",
 }
 
 # bits 12-14
@@ -105,6 +106,7 @@ funct3 = {
  "sra": "101",
  "or": "110",
  "and": "111",
+ "halt": "000",
 }
 
 # bits 25-31
@@ -122,6 +124,7 @@ funct7 = {
  "sra": "0100000",
  "or": "0000000",
  "and": "0000000",
+ "halt": "0000000",
 }
 
 
@@ -213,12 +216,12 @@ def translate(instruction):
 def translate_instruction(instruction):
 	instr = instruction.split(" ")[0]
 
-	rd = instruction.split(" ")[1].split(",")[0]
-	rd = bin(int(rd[1:]))[2:].zfill(5)
-	
 	halt_instruction = instruction.rstrip("\n")
 	if halt_instruction == "halt":
-		return "00000000000000000000000000000001"
+		binary = "00000000000000000000000000000001"
+	else:
+		rd = instruction.split(" ")[1].split(",")[0]
+		rd = bin(int(rd[1:]))[2:].zfill(5)
 
 	if (instr == "lui" or instr == "auipc"):
 		imm = instruction.split(" ")[1].split(",")[1]
